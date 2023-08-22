@@ -7,12 +7,13 @@ import cors from "cors";
 import mongoose from "mongoose";
 import { CategoriesRouter } from "./modules/categories/categories.router";
 import { ProductsRouter } from "./modules/products/products.router";
-
+import dotenv from "dotenv";
 // import { deleteAllProducts, getProductsCount } from "./modules/products/products.controller";
 // import { getCategoriesCount } from "./modules/categories/categories.controller";
 // import { setAllCategories } from "./modules/categories/utils";
 
 const app = express();
+dotenv.config();
 
 app.use(cors({
   credentials: true
@@ -31,10 +32,10 @@ server.listen(8080, () => {
   console.log("server is running on 8080");
 })
 
-const MONGO_URL = "mongodb+srv://eremeev23:eremeev32@cluster0.pv1awcw.mongodb.net/?retryWrites=true&w=majority"
+const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.Promise = Promise;
-mongoose.connect(MONGO_URL);
+mongoose.connect(MONGO_URI);
 
 mongoose.connection.on("error", (error: Error) => console.log(error));
 mongoose.connection.on("connected", async () => {

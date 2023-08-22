@@ -38,7 +38,7 @@ function setCategory(category: Category): BaseCategory[] {
 const config = {
   headers: {
     "X-RapidAPI-Host": "apidojo-hm-hennes-mauritz-v1.p.rapidapi.com",
-    "X-RapidAPI-Key": "b400939076msh77be0f114e68dccp1a31bajsn9a761fb7d63a",
+    "X-RapidAPI-Key": process.env.RAPID_KEY,
   }
 }
 
