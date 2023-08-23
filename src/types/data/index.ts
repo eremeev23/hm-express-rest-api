@@ -1,4 +1,4 @@
-export type Price = {
+export interface Price {
   currencyIso: string;
   value: number;
   priceType: string;
@@ -6,12 +6,12 @@ export type Price = {
   type: string;
 }
 
-export type ProductImage = {
+export interface ProductImage {
   url: string;
-  baseUrl: string
+  baseUrl: string;
 }
 
-export type Article = {
+export interface Article {
   code: string;
   name: string;
   images: ProductImage[];
@@ -33,25 +33,24 @@ export type Article = {
   turnToSku: string;
 }
 
-export type Color = {
+export interface Color {
   code: string;
   text: string;
   filterName: string;
   hybrisCode: string;
 }
 
-export type Marker = {
+export interface Marker {
   text: string;
   type: string;
 }
 
-export type Size = {
+export interface Size {
   orderFilter: number;
   filterCode: string;
 }
 
-
-export type Product = {
+export interface Product {
   code: string;
   name: string;
   stock: {
@@ -60,7 +59,7 @@ export type Product = {
   price: Price;
   images: ProductImage[];
   categories: [];
-  pk: string
+  pk: string;
   whitePrice: Price;
   articles: Article[];
   markers: Marker[];
@@ -93,5 +92,5 @@ export interface Category {
   CatName: string;
   CategoryValue: string;
   CategoriesArray?: Category[];
-  tagCodes: string[]
+  tagCodes: string[];
 }

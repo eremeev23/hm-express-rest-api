@@ -2,10 +2,19 @@
   "compilerOptions": {
     "module": "NodeNext",
     "moduleResolution": "node",
-    "baseUrl": "src",
     "outDir": "dist",
+    "baseUrl": "./src",
+    "paths": {
+      "@/middleware/*": ["middleware/*"],
+      "@/resources/*": ["resources/*"],
+      "@/config/*": ["config/*"],
+      "@/routes/*": ["routes/*"],
+      "@/types/*": ["types/*"],
+      "@/utils/*": ["utils/*"]
+    },
     "sourceMap": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "skipLibCheck": true
   },
   "include": ["src/**/*"]
 }

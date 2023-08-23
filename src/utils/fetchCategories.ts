@@ -1,12 +1,14 @@
 import axios from "axios";
-import { createCategory } from "../categories.controller";
-import { Category } from "../../../types";
+import { createCategory } from "@/resources/category/category.service";
+import { Category } from "@/types/data";
+import { hmApiConfig } from "@/config/hmApiConfig";
 
 interface BaseCategory {
   name: string;
   slug: string;
   parentId?: string;
-  children?: BaseCategory[]
+  children?: BaseCategory[];
+  tags: string[];
 }
 
 export const setAllCategories = async () => {
@@ -16,11 +18,13 @@ export const setAllCategories = async () => {
     const baseCategory: BaseCategory = {
       name: category.CatName,
       slug: category.CategoryValue,
-      children: setCategory(category)
+      children: setCategory(category),
+      tags: [...category.tagCodes],
     };
+
     createCategory(baseCategory);
-  })
-}
+  });
+};
 
 function setCategory(category: Category): BaseCategory[] {
   if (!category.CategoriesArray) {
@@ -31,18 +35,15 @@ function setCategory(category: Category): BaseCategory[] {
     parentId: category.CategoryValue,
     name: child.CatName,
     slug: child.CategoryValue,
-    children: setCategory(child)
-  }))
-}
-
-const config = {
-  headers: {
-    "X-RapidAPI-Host": "apidojo-hm-hennes-mauritz-v1.p.rapidapi.com",
-    "X-RapidAPI-Key": process.env.RAPID_KEY,
-  }
+    children: setCategory(child),
+    tags: [...child.tagCodes],
+  }));
 }
 
 async function getCategories(): Promise<Category[]> {
-  const { data } = await axios.get<Category[]>("https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/categories/list", config);
+  const { data } = await axios.get<Category[]>(
+    "https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/categories/list",
+    hmApiConfig,
+  );
   return data;
 }
