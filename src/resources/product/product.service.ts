@@ -23,6 +23,29 @@ export class ProductService {
     }
   }
 
+  public async fetchProducts() {
+    const hash = {};
+
+    for (let i = 1; i <= 101; i++) {
+      const { docs } = await this.model.paginate({}, { i, limit: 100 });
+
+      for (const product of docs) {
+        const key: string = product.code;
+        // @ts-ignore
+        if (hash[key]) {
+          this.model.deleteOne({ _id: product.id });
+        } else {
+          // @ts-ignore
+          hash[key] = 1;
+        }
+      }
+
+      console.log(`Done page ${i}`);
+    }
+
+    console.log(hash);
+  }
+
   public async getProductById(id: string) {
     return ProductModel.findById(id);
   }

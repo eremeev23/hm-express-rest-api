@@ -10,5 +10,5 @@ validateEnv();
 const controller = [new CategoryController(), new ProductController()];
 
 const app = new App(controller, Number(process.env.PORT));
-
+// removeNotUniqItems();
 app.listen();

@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { ProductModel } from "@/resources/product/product.model";
 import { Controller } from "@/types/utils/controller";
-import { ProductService } from "@/resources/product/product.service";
 import validationMiddleware from "@/middleware/validation.middleware";
 import validate from "@/resources/product/product.validation";
 import { HttpException } from "@/utils/exceptions/http.exception";
+import { ProductService } from "@/resources/product/product.service";
 
 export class ProductController implements Controller {
   public path: string = "/products";
@@ -21,6 +21,12 @@ export class ProductController implements Controller {
       `${this.path}`,
       (req: Request, res: Response, next: NextFunction) =>
         this.getProducts(req, res, next),
+    );
+
+    this.router.get(
+      `${this.path}/popular`,
+      (req: Request, res: Response, next: NextFunction) =>
+        this.getPopularProducts(req, res, next),
     );
 
     this.router.get(
@@ -65,6 +71,32 @@ export class ProductController implements Controller {
     }
   }
 
+  private async getPopularProducts(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const products = [];
+      const popularProducts = [
+        "64e4ea03df2e39b9963b41c7",
+        "64e4ea03df2e39b9963b41e7",
+        "64e4ea03df2e39b9963b427d",
+        "64e4ea03df2e39b9963b42d2",
+        "64e4ea03df2e39b9963b44a4",
+      ];
+
+      for (let id of popularProducts) {
+        const response = await this.ProductService.getProductById(id);
+        products.push(response);
+      }
+
+      res.status(200).json(products);
+    } catch (e) {
+      next(new HttpException(404, "No results"));
+    }
+  }
+
   private async getProductById(
     req: Request,
     res: Response,
@@ -85,6 +117,13 @@ export class ProductController implements Controller {
     } catch (e) {
       next(new HttpException(400, "Cannot create product"));
     }
+  }
+
+  private async removeNotUniqItems() {
+    await this.ProductService.fetchProducts();
+
+    const res = await getProductsCount();
+    console.log(res);
   }
 }
 
