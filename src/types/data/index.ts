@@ -94,3 +94,13 @@ export interface Category {
   CategoriesArray?: Category[];
   tagCodes: string[];
 }
+
+export interface Link {
+  href: string;
+  title: string;
+}
+
+export interface LinkWithIcon {
+  href: string;
+  iconName: string;
+}

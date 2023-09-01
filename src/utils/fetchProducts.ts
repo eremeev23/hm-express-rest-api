@@ -4,10 +4,10 @@ import {
 } from "@/resources/product/product.controller";
 import { Product } from "@/types/data";
 import axios from "axios";
-import { hmApiConfig } from "../config/hmApiConfig";
+import { hmApiConfig } from "@/config/hmApiConfig";
 
 export const setAllProducts = async () => {
-  for (let i = 3; i <= 25; i++) {
+  for (let i = 22; i <= 33; i++) {
     const products = await getProducts(i);
 
     products.forEach((product) => {
@@ -16,7 +16,7 @@ export const setAllProducts = async () => {
 
     const productsCount = await getProductsCount();
 
-    console.log("Done!");
+    console.log(`Done! page ${i}`); // 221
     console.log(productsCount);
   }
 };
@@ -24,8 +24,8 @@ export const setAllProducts = async () => {
 async function getProducts(time: number): Promise<Array<Product>> {
   const resultArr: Product[][] = [];
 
-  let start = 13 * time;
-  let finish = start + 13;
+  let start = 10 * time;
+  let finish = start + 9;
 
   for (let i = start; i <= finish; i++) {
     const { data } = await axios.get<{ results: Array<Product> }>(

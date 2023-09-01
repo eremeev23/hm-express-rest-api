@@ -23,9 +23,15 @@ export class CategoryController implements Controller {
     );
 
     this.router.get(
-      `${this.path}/:id`,
+      `${this.path}/category/:id`,
       (req: Request, res: Response, next: NextFunction) =>
         this.getCategoryById(req, res, next),
+    );
+
+    this.router.get(
+      `${this.path}/main`,
+      (req: Request, res: Response, next: NextFunction) =>
+        this.getMainCategories(req, res, next),
     );
 
     this.router.post(
@@ -60,6 +66,19 @@ export class CategoryController implements Controller {
         req.params.id,
       );
       res.status(200).json(category);
+    } catch (e) {
+      next(new HttpException(404, "No category"));
+    }
+  }
+
+  private async getMainCategories(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const categories = await this.CategoryService.getCategories(1, 3);
+      res.status(200).json(categories);
     } catch (e) {
       next(new HttpException(404, "No category"));
     }

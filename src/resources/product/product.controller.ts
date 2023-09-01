@@ -79,11 +79,11 @@ export class ProductController implements Controller {
     try {
       const products = [];
       const popularProducts = [
-        "64e4ea03df2e39b9963b41c7",
-        "64e4ea03df2e39b9963b41e7",
-        "64e4ea03df2e39b9963b427d",
-        "64e4ea03df2e39b9963b42d2",
-        "64e4ea03df2e39b9963b44a4",
+        "64e8c07761addd880fb4a9d4",
+        "64e8c07761addd880fb4ab10",
+        "64e8c07761addd880fb4aa56",
+        "64e8c07761addd880fb4ac9e",
+        "64e8c07761addd880fb4ab43",
       ];
 
       for (let id of popularProducts) {
@@ -117,13 +117,6 @@ export class ProductController implements Controller {
     } catch (e) {
       next(new HttpException(400, "Cannot create product"));
     }
-  }
-
-  private async removeNotUniqItems() {
-    await this.ProductService.fetchProducts();
-
-    const res = await getProductsCount();
-    console.log(res);
   }
 }
 

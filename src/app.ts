@@ -6,6 +6,10 @@ import morgan from "morgan";
 import helmet from "helmet";
 import { Controller } from "@/types/utils/controller";
 import { errorMiddleware } from "@/middleware/error.middleware";
+import { setAllProducts } from "@/utils/fetchProducts";
+import { deleteAllProducts } from "@/resources/product/product.controller";
+import { setAllCategories } from "@/utils/fetchCategories";
+import { deleteAllCategories } from "@/resources/category/category.service";
 
 export class App {
   public express: Application;
@@ -56,7 +60,7 @@ export class App {
       // await setAllCategories();
       // setAllProducts();
       // const res = await deleteAllProducts();
-      // console.log(res.deletedCount)
+      // console.log(res.deletedCount);
     });
   }
 

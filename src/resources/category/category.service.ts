@@ -16,6 +16,7 @@ export class CategoryService {
     const options = {
       page,
       limit,
+      sort: { order: 1 },
       customLabels: {
         totalDocs: "count",
         docs: "results",
@@ -25,15 +26,24 @@ export class CategoryService {
       },
     };
 
-    return this.model.paginate(filter, options);
+    const filters = {
+      ...filter,
+      order: { $gte: 1 },
+    };
+
+    return this.model.paginate(filters, options);
   }
 
   public async getCategoryById(id: string) {
-    return this.model.findById(id);
+    return this.model.find({ uid: id });
   }
 
   public async getCategoriesCount() {
     return this.model.count({});
+  }
+
+  public async updateCategory(category: CategoryDocument) {
+    return this.model.findOneAndUpdate({ _id: category._id }, category);
   }
 
   public async deleteAllCategories() {

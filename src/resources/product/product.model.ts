@@ -105,4 +105,4 @@ ProductSchema.plugin(paginate);
 export const ProductModel = model<
   ProductDocument,
   PaginateModel<ProductDocument>
->("Product", ProductSchema, "product");
+>("Product", ProductSchema, "products");
